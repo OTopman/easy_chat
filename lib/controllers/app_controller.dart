@@ -6,18 +6,18 @@ class AppController extends GetxController {
   Map<String, dynamic> typing = {'username': '', 'isTyping': false}.obs;
   var user = '...'.obs;
   setMessages(List<Message> msgs) {
-    messages.value = [...msgs];
+    messages.value = msgs;
   }
 
-  addMessage(Message msg) => messages.addIf(!messages.contains(msg), msg);
+  void addMessage(Message msg) {
+    if (!messages.contains(msg)) {
+      messages.add(msg);
+    }
+  }
+
   void setTyping(dynamic msg) {
-    // if (msg['isTyping']) {
-    print(msg);
     typing['username'] = msg["username"];
     typing['isTyping'] = msg['isTyping'];
-    // } else {
-    // typing = 'This is a squad of talented team group chat'.obs;
-    // }
   }
 
   setUsers(List<String> users) => user.value = users.join(",");

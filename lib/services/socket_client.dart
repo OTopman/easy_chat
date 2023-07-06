@@ -2,9 +2,10 @@ import 'package:easy_chat/constants/constants.dart';
 import 'package:easy_chat/models/message.dart';
 import 'package:easy_chat/models/storage.dart';
 import 'package:easy_chat/services/events.dart';
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+// ignore: library_prefixes
 import 'package:socket_io_client/socket_io_client.dart' as IO;
-import 'package:socket_io_client/socket_io_client.dart';
 
 import '../controllers/app_controller.dart';
 
@@ -21,8 +22,17 @@ class SocketClient {
   }
 
   static IO.Socket init() {
-    socket ??= IO.io(
-        Constants.server, OptionBuilder().setTransports(['websocket']).build());
+    socket ??= IO.io(Constants.server,
+        IO.OptionBuilder().setTransports(['websocket']).build());
+
+    socket!.on(Events.connect, (data) => debugPrint("App connected to server"));
+    socket!.on(Events.connecting, (data) => debugPrint("App connecting to server"));
+    socket!.on(Events.disconnect,
+        (data) => debugPrint("App disconnected from server"));
+    socket!.on(Events.error, (data) {
+      debugPrint("An error occurred");
+      debugPrint(data.toString());
+    });
 
     socket!.on(Events.messages, _onMessagesLoad);
     socket!.on(Events.typing, _onTyping);
@@ -39,10 +49,18 @@ class SocketClient {
     _storage.add(Constants.username, username);
   }
 
+  static loadMessages() {
+    if (socket == null) throw "SocketClient.init() must be called first.";
+
+    var username = _storage.get(Constants.username);
+    socket!.emit(Events.listMessage, {'username': username});
+  }
+
   static typing(bool typing) {
     if (socket == null) throw "SocketClient.init() must be called first.";
 
-    socket!.emit(Events.typing, {'username': _storage.get(Constants.username), 'isTyping': typing});
+    socket!.emit(Events.typing,
+        {'username': _storage.get(Constants.username), 'isTyping': typing});
   }
 
   static sendMessage(String message) {

@@ -8,8 +8,9 @@ import 'package:sizer/sizer.dart';
 
 // ignore: must_be_immutable
 class MessageWidget extends StatelessWidget {
-  MessageWidget({super.key, required this.message});
+  MessageWidget({super.key, required this.message, this.isLastItem = false});
   Message message;
+  bool isLastItem;
   final _storage = Storage();
   @override
   Widget build(BuildContext context) {
@@ -19,7 +20,7 @@ class MessageWidget extends StatelessWidget {
     return UnconstrainedBox(
       alignment: isMe ? Alignment.centerRight : Alignment.centerLeft,
       child: Container(
-        margin: const EdgeInsets.only(bottom: 30.0),
+        margin: EdgeInsets.only(bottom: isLastItem ? 85.0 : 30.0),
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(15),
           color: Colors.transparent,
