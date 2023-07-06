@@ -15,7 +15,7 @@ class SocketClient {
   static final Storage _storage = Storage();
   static final messageController = Get.put(AppController());
 
-  // static List<Message> get Messages => _messages;
+  // static List<Message> get Messages => _messages;git branch -m master main
 
   SocketClient() {
     throw "SocketClient constructor cannot be called directly use SocketClient.init() instead";
