@@ -4,6 +4,7 @@ import 'package:easy_chat/models/storage.dart';
 import 'package:easy_chat/services/events.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+// ignore: library_prefixes
 import 'package:socket_io_client/socket_io_client.dart' as IO;
 
 import '../controllers/app_controller.dart';
@@ -25,6 +26,7 @@ class SocketClient {
         IO.OptionBuilder().setTransports(['websocket']).build());
 
     socket!.on(Events.connect, (data) => debugPrint("App connected to server"));
+    socket!.on(Events.connecting, (data) => debugPrint("App connecting to server"));
     socket!.on(Events.disconnect,
         (data) => debugPrint("App disconnected from server"));
     socket!.on(Events.error, (data) {
