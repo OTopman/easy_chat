@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 MaterialColor ultraMarineBlue = createMaterialColor(const Color(0xff4369F1));
 MaterialColor cultured = createMaterialColor(const Color(0xfff5f5f5));
+MaterialColor culturedAlt = createMaterialColor(const Color(0xffc5c5c5));
 MaterialColor white = createMaterialColor(const Color(0xffffffff));
 MaterialColor black = createMaterialColor(const Color(0xff000000));
 MaterialColor philippineSilver = createMaterialColor(const Color(0xffb4b1b1));

@@ -20,29 +20,28 @@ class _MainScreenState extends State<MainScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Theme.of(context).colorScheme.background,
-      body: SafeArea(
-        child: SizedBox(
-          height: 100.0.h,
-          width: 100.0.w,
-          child: Stack(
+      resizeToAvoidBottomInset: true,
+      body: SingleChildScrollView(
+        child: SafeArea(
+          child: Column(
             children: [
-              Container(
-                margin: EdgeInsets.only(top: 5.0.h, bottom: 5.0.h),
-                padding: const EdgeInsets.fromLTRB(60, 40, 60, 60),
-                child: Text(
-                  'Welcome Back to EasyChat',
-                  style: Theme.of(context)
-                      .textTheme
-                      .bodyMedium!
-                      .copyWith(fontWeight: FontWeight.bold, color: black),
+              Align(
+                alignment: Alignment.topCenter,
+                child: Container(
+                  margin: EdgeInsets.only(top: 5.0.h),
+                  padding: const EdgeInsets.fromLTRB(40, 0, 60, 60),
+                  child: Text(
+                    'Welcome Back to EasyChat',
+                    style: Theme.of(context)
+                        .textTheme
+                        .bodyMedium!
+                        .copyWith(fontWeight: FontWeight.bold, color: black),
+                  ),
                 ),
               ),
-              Positioned(
-                bottom: 0,
-                right: 0,
-                left: 0,
-                top: 25.0.h,
-                child: const MainScreenBody(),
+              const Align(
+                alignment: Alignment.bottomCenter,
+                child: MainScreenBody(),
               )
             ],
           ),

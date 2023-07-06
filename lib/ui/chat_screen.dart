@@ -35,8 +35,10 @@ class _ChatScreenState extends State<ChatScreen> {
     return GestureDetector(
       onTap: () => _messageFieldFocus.unfocus(),
       child: Scaffold(
+        backgroundColor: cultured,
         appBar: AppBar(
           elevation: 0,
+          toolbarHeight: 70,
           automaticallyImplyLeading: false,
           flexibleSpace: const ChatTopBar(),
         ),
@@ -44,7 +46,7 @@ class _ChatScreenState extends State<ChatScreen> {
           children: [
             Container(
               color: cultured,
-              padding: const EdgeInsets.all(20),
+              padding: const EdgeInsets.fromLTRB(20, 20, 20, 45),
               width: 100.0.w,
               margin: const EdgeInsets.only(top: 10.0),
               child: Obx(() {
@@ -85,96 +87,103 @@ class _ChatScreenState extends State<ChatScreen> {
                     bottomRight: Radius.zero,
                   ),
                 ),
-                child: StatefulBuilder(
-                  builder: (context, textFieldState) {
-                    return TextFormField(
-                      style: Theme.of(context)
-                          .textTheme
-                          .bodySmall!
-                          .copyWith(fontWeight: FontWeight.w100),
-                      controller: _messageController,
-                      cursorColor: ultraMarineBlue,
-                      showCursor: true,
-                      keyboardType: TextInputType.multiline,
-                      minLines: 1,
-                      maxLines: 2,
-                      enableSuggestions: true,
-                      onTap: () => _messageFieldFocus.requestFocus(),
-                      focusNode: _messageFieldFocus,
-                      onEditingComplete: () {
-                        _isTyping = false;
+                child: StatefulBuilder(builder: (context, textFieldState) {
+                  return TextFormField(
+                    style: Theme.of(context).textTheme.bodySmall!.copyWith(
+                        fontWeight: FontWeight.w100, fontSize: 6.0.sp),
+                    controller: _messageController,
+                    cursorColor: ultraMarineBlue,
+                    showCursor: true,
+                    keyboardType: TextInputType.multiline,
+                    minLines: 1,
+                    maxLines: 2,
+                    enableSuggestions: true,
+                    onTap: () => _messageFieldFocus.requestFocus(),
+                    focusNode: _messageFieldFocus,
+                    onEditingComplete: () {
+                      _isTyping = false;
+                      SocketClient.typing(false);
+                      // textFieldState(() {});
+                    },
+                    onTapOutside: (p) => SocketClient.typing(false),
+                    onChanged: (param) {
+                      if (param.trim().isNotEmpty) {
+                        _enableSend = true;
+                        if (!_isTyping) {
+                          SocketClient.typing(true);
+                          _isTyping = true;
+                        }
+                      }
+                      if (param.trim().isEmpty && _isTyping) {
+                        _enableSend = false;
                         SocketClient.typing(false);
-                        // textFieldState(() {});
-                      },
-                      onTapOutside: (p) => SocketClient.typing(false),
-                      onChanged: (param) {
-                        if (param.trim().isNotEmpty) {
-                          _enableSend = true;
-                          if (!_isTyping) {
-                            SocketClient.typing(true);
-                            _isTyping = true;
-                          }
-                        }
-                        if (param.trim().isEmpty && _isTyping) {
-                          _enableSend = false;
-                          SocketClient.typing(false);
-                          _isTyping = false;
-                        }
-                        textFieldState(() {});
-                      },
-                      decoration: InputDecoration(
-                        floatingLabelBehavior: FloatingLabelBehavior.never,
-                        enabledBorder: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(100.0),
-                          borderSide: BorderSide(color: cultured),
-                        ),
-                        focusedBorder: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(100.0),
-                          borderSide: BorderSide(color: cultured),
-                        ),
-                        suffixIcon: GestureDetector(
-                          onTap: !_enableSend
-                              ? null
-                              : () {
-                                  SocketClient.sendMessage(
-                                      _messageController.text.trim());
-                                  _messageController.clear();
-                                  setState(() {
-                                    _enableSend = false;
-                                  });
+                        _isTyping = false;
+                      }
+                      textFieldState(() {});
+                    },
+                    decoration: InputDecoration(
+                      floatingLabelBehavior: FloatingLabelBehavior.never,
+                      enabledBorder: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(100.0),
+                        borderSide: BorderSide(color: cultured),
+                      ),
+                      focusedBorder: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(100.0),
+                        borderSide: BorderSide(color: cultured),
+                      ),
+                      suffixIcon: GestureDetector(
+                        onTap: !_enableSend
+                            ? (){
+                              SocketClient.typing(false);
+                            }
+                            : () {
+                              SocketClient.typing(false);
+                                SocketClient.sendMessage(
+                                    _messageController.text.trim());
+                                _messageController.clear();
+                                setState(() {
+                                  _enableSend = false;
+                                });
 
-                                  ScrollService.scrollToEnd(
-                                      scrollController: _scrollController);
-                                },
-                          child: Container(
-                            width: 32,
-                            // alignment: Alignment.centerRight,
-                            margin: const EdgeInsets.only(right: 10.0),
-                            decoration: BoxDecoration(
-                              image: _enableSend
-                                  ? const DecorationImage(
-                                      image: AssetImage(
-                                          'assets/images/send-icon-active.png'),
-                                    )
-                                  : const DecorationImage(
-                                      image:
-                                          AssetImage('assets/images/send-icon.png'),
-                                    ),
-                            ),
+                                ScrollService.scrollToEnd(
+                                    scrollController: _scrollController);
+                              },
+                        child: Container(
+                          width: 20,
+                          // alignment: Alignment.centerRight,
+                          margin: const EdgeInsets.only(right: 10.0),
+                          decoration: BoxDecoration(
+                            image: _enableSend
+                                ? const DecorationImage(
+                                    // scale: 0.01,
+                                    image: AssetImage(
+                                        'assets/images/send-icon-active.png'),
+                                  )
+                                : const DecorationImage(
+                                    // scale: 0.01,
+                                    image: AssetImage(
+                                        'assets/images/send-icon.png'),
+                                  ),
                           ),
                         ),
-                        label: const Text('Type here...'),
-                        border: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(100.0),
-                            borderSide: BorderSide(color: cultured)),
-                        contentPadding: const EdgeInsets.symmetric(
-                          horizontal: 30.0,
-                          vertical: 25.0,
-                        ),
                       ),
-                    );
-                  }
-                ),
+                      label: Text(
+                        'Type here...',
+                        style: Theme.of(context).textTheme.bodySmall!.copyWith(
+                            fontWeight: FontWeight.w100,
+                            fontSize: 6.0.sp,
+                            color: culturedAlt),
+                      ),
+                      border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(100.0),
+                          borderSide: BorderSide(color: cultured)),
+                      contentPadding: const EdgeInsets.symmetric(
+                        horizontal: 30.0,
+                        vertical: 20.0,
+                      ),
+                    ),
+                  );
+                }),
               ),
             )
           ],

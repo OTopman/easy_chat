@@ -22,8 +22,8 @@ class _MainScreenBodyState extends State<MainScreenBody> {
   Widget build(BuildContext context) {
     return Container(
       width: 100.0.w,
-      height: 70.0.h,
-      padding: const EdgeInsets.fromLTRB(20, 60, 20, 20),
+      height: 73.0.h,
+      padding: const EdgeInsets.fromLTRB(20, 60, 20, 0),
       // margin: EdgeInsets.only(top: 5.0.h),
       decoration: BoxDecoration(
         color: white,
@@ -65,20 +65,18 @@ class _MainScreenBodyState extends State<MainScreenBody> {
                 ),
           ),
           const SizedBox(height: 20),
-          Expanded(
-            child: TextFormField(
-              style: Theme.of(context).textTheme.bodySmall,
-              controller: usernameController,
-              cursorColor: ultraMarineBlue,
-              showCursor: true,
-              decoration: const InputDecoration(
-                label: Text('JohnDoe'),
-                floatingLabelBehavior: FloatingLabelBehavior.never,
-                contentPadding: EdgeInsets.symmetric(
-                  horizontal: 30.0,
-                  vertical: 25.0,
-                ),
-              ),
+          TextFormField(
+            style: Theme.of(context).textTheme.bodySmall!.copyWith(fontSize: 6.0.sp),
+            controller: usernameController,
+            cursorColor: ultraMarineBlue,
+            showCursor: true,
+            decoration: const InputDecoration(
+              label: Text('JohnDoe'),
+              floatingLabelBehavior: FloatingLabelBehavior.never,
+              // contentPadding: EdgeInsets.symmetric(
+              //   horizontal: 30.0,
+              //   vertical: 25.0,
+              // ),
             ),
           ),
           const SizedBox(height: 30),
@@ -101,7 +99,7 @@ class _MainScreenBodyState extends State<MainScreenBody> {
             },
             style: ButtonStyle(
               backgroundColor: MaterialStateProperty.all(ultraMarineBlue),
-              minimumSize: MaterialStateProperty.all(Size(100.0.w, 50.0.sp)),
+              minimumSize: MaterialStateProperty.all(Size(100.0.w, 60)),
               shape: MaterialStateProperty.all(
                 RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
               ),
@@ -109,10 +107,10 @@ class _MainScreenBodyState extends State<MainScreenBody> {
             child: Text(
               'Get Started',
               style:
-                  Theme.of(context).textTheme.bodySmall!.copyWith(color: white),
+                  Theme.of(context).textTheme.bodySmall!.copyWith(color: white, fontSize: 7.0.sp),
             ),
           ),
-          const SizedBox(height: 60),
+          // const SizedBox(height: 20),
         ],
       ),
     );

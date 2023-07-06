@@ -17,18 +17,24 @@ class _ChatTopBarState extends State<ChatTopBar> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      // height: 100.0,
       width: 100.0.w,
-      color: white,
-      padding: const EdgeInsets.only(left: 15, right: 15, top: 0),
+      padding: const EdgeInsets.only(left: 15, right: 15, top: 10, bottom: 10),
+      decoration: BoxDecoration(
+        color: white,
+        borderRadius: const BorderRadius.only(
+          bottomLeft: Radius.circular(20),
+          bottomRight: Radius.circular(20),
+        ),
+      ),
       child: SafeArea(
         child: Row(
           crossAxisAlignment: CrossAxisAlignment.center,
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             Container(
-              width: 40.0.sp,
-              height: 40.0.sp,
+              width: 40.0,
+              height: 40.0,
+              padding: const EdgeInsets.all(20),
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(50),
                 color: black,
@@ -60,7 +66,9 @@ class _ChatTopBarState extends State<ChatTopBar> {
                       overflow: TextOverflow.ellipsis,
                       softWrap: true,
                       style: Theme.of(context).textTheme.bodySmall!.copyWith(
-                          fontSize: 5.0.sp, fontWeight: FontWeight.w100),
+                          fontSize: 5.0.sp,
+                          fontWeight: FontWeight.w100,
+                          color: culturedAlt),
                     ),
                   ),
                 ),
