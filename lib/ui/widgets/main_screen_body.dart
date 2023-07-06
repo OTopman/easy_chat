@@ -23,7 +23,8 @@ class _MainScreenBodyState extends State<MainScreenBody> {
     return Container(
       width: 100.0.w,
       height: 70.0.h,
-      padding: const EdgeInsets.all(20),
+      padding: const EdgeInsets.fromLTRB(20, 60, 20, 20),
+      // margin: EdgeInsets.only(top: 5.0.h),
       decoration: BoxDecoration(
         color: white,
         borderRadius: const BorderRadius.only(
@@ -64,16 +65,19 @@ class _MainScreenBodyState extends State<MainScreenBody> {
                 ),
           ),
           const SizedBox(height: 20),
-          TextFormField(
-            style: Theme.of(context).textTheme.bodySmall,
-            controller: usernameController,
-            cursorColor: ultraMarineBlue,
-            showCursor: true,
-            decoration: const InputDecoration(
-              label: Text('Username'),
-              contentPadding: EdgeInsets.symmetric(
-                horizontal: 30.0,
-                vertical: 25.0,
+          Expanded(
+            child: TextFormField(
+              style: Theme.of(context).textTheme.bodySmall,
+              controller: usernameController,
+              cursorColor: ultraMarineBlue,
+              showCursor: true,
+              decoration: const InputDecoration(
+                label: Text('JohnDoe'),
+                floatingLabelBehavior: FloatingLabelBehavior.never,
+                contentPadding: EdgeInsets.symmetric(
+                  horizontal: 30.0,
+                  vertical: 25.0,
+                ),
               ),
             ),
           ),

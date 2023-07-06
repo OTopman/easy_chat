@@ -8,12 +8,12 @@ class ScrollService {
       Function? callback}) {
     SchedulerBinding.instance.addPostFrameCallback((_) {
       scrollController.jumpTo(reversed
-          ? scrollController.position.minScrollExtent
-          : scrollController.position.maxScrollExtent);
+          ? scrollController.position.minScrollExtent - 900
+          : scrollController.position.maxScrollExtent + 150);
       // scrollController.animateTo(
       //   reversed
       //       ? scrollController.position.minScrollExtent
-      //       : scrollController.position.maxScrollExtent,
+      //       : scrollController.position.maxScrollExtent + 900,
       //   duration: const Duration(milliseconds: 300),
       //   curve: Curves.easeOut,
       // );

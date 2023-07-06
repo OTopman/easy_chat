@@ -15,17 +15,7 @@ void main() async {
   await Hive.initFlutter();
   await Hive.openBox(Constants.storageBox);
 
-  var io = SocketClient.init();
-  io.on('connect', (data) => debugPrint("App connected to server"));
-  io.on('disconnect', (data) => debugPrint("App disconnected from server"));
-  io.on('connect_error', (data) {
-    debugPrint("App connect_error");
-    debugPrint(data.toString());
-  });
-  io.on('error', (data) {
-    debugPrint("An error occurred");
-    debugPrint(data.toString());
-  }); 
+  SocketClient.init();
 
   runApp(App());
 }

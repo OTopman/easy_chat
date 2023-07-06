@@ -7,4 +7,6 @@ class Events{
   static const String typing = 'typing';
   static const String error = 'error';
   static const String users = 'users';
+  static const String connect = 'connect';
+  static const String disconnect = 'disconnect';
 }
